@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:galaxy_explorer/design_system/buttons.dart';
+import 'package:galaxy_explorer/design_system/colors_typography.dart';
 import 'package:galaxy_explorer/presentation/pages/login_page.dart';
-
+import 'package:galaxy_explorer/design_system/components.dart';
 import '../../design_system/constants.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -18,27 +20,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 20, top: 20),
-              child: InkWell(
-                onTap: () => Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const LoginPage())),
-                child: const Text(
-                  'Skip',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            )
-          ]),
+      backgroundColor: UIColor.background,
+      appBar: onboardingAppBar(context),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -68,67 +51,50 @@ class _OnboardingPageState extends State<OnboardingPage> {
             bottom: 80,
             left: 30,
             child: Row(
-              children: _buildIndicator(currentIndex),
+              children: buildIndicator(currentIndex, 3),
             ),
           ),
           Positioned(
             bottom: 20,
             right: 20,
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Constants.primaryColor,
-              ),
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (currentIndex == 2) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()));
-                    } else {
-                      currentIndex++;
-                      _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeIn);
-                    }
-                  });
-                },
-                icon: const Icon(
-                  Icons.arrow_forward_ios,
-                  size: 24,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            child: circleButton(context, onboardingButton(context, nextIcon())),
           )
         ],
       ),
     );
   }
-}
 
-Widget _indicator(bool isActive) {
-  return AnimatedContainer(
-    duration: const Duration(milliseconds: 300),
-    margin: const EdgeInsets.only(right: 5.0),
-    height: 10.0,
-    width: isActive ? 20 : 8,
-    decoration: BoxDecoration(
-      color: Constants.primaryColor,
-      borderRadius: BorderRadius.circular(5),
-    ),
-  );
-}
-
-List<Widget> _buildIndicator(int currentIndex) {
-  List<Widget> indicators = [];
-  for (int i = 0; i < 3; i++) {
-    indicators.add(i == currentIndex ? _indicator(true) : _indicator(false));
+  IconButton onboardingButton(BuildContext context, Icon nextIcon) {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          if (currentIndex == 2) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const LoginPage()));
+          } else {
+            currentIndex++;
+            _pageController.nextPage(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeIn);
+          }
+        });
+      },
+      icon: nextIcon,
+    );
   }
-  return indicators;
+
+  AppBar onboardingAppBar(BuildContext context) {
+    return AppBar(elevation: 0.0, backgroundColor: Colors.white, actions: [
+      Padding(
+        padding: const EdgeInsets.only(right: 20, top: 20),
+        child: InkWell(
+          onTap: () => Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const LoginPage())),
+          child: secondaryBody('Skip'),
+        ),
+      )
+    ]);
+  }
 }
 
 class createPage extends StatelessWidget {
@@ -151,29 +117,13 @@ class createPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: 300,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Image.asset(image),
           ),
           const SizedBox(height: 20),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Constants.primaryColor,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          accentTitle(title),
           const SizedBox(height: 20),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w400,
-              color: Colors.grey,
-            ),
-          )
+          primaryBody(description),
         ],
       ),
     );

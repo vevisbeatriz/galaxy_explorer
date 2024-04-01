@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  static var primaryColor = const Color(0xFF6200EE);
-
   // Onboarding texts
   static var titleOne = "Learn more about our galaxy";
   static var descriptionOne = "Read about the planets in our amazing galaxy guide.";
