@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class UIColor {
   // Private constructor
@@ -11,8 +12,8 @@ class UIColor {
   static const Color bodyGrey = Colors.grey;
 }
 
-Text primaryBody(String description) {
-  return Text(
+AutoSizeText primaryBody(String description) {
+  return AutoSizeText(
     description,
     textAlign: TextAlign.center,
     style: const TextStyle(
@@ -23,8 +24,8 @@ Text primaryBody(String description) {
   );
 }
 
-Text accentTitle(String title) {
-  return Text(
+AutoSizeText accentTitle(String title) {
+  return AutoSizeText(
     title,
     textAlign: TextAlign.center,
     style: const TextStyle(
@@ -35,8 +36,8 @@ Text accentTitle(String title) {
   );
 }
 
-Text secondaryBody(String text) {
-  return Text(
+AutoSizeText secondaryBody(String text) {
+  return AutoSizeText(
     text,
     style: const TextStyle(
       color: UIColor.bodyGrey,

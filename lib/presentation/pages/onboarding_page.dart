@@ -79,7 +79,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
           }
         });
       },
-      icon: nextIcon,
+      icon: Semantics(
+        label: 'Next page',
+        child: nextIcon,
+      ),
     );
   }
 
@@ -87,10 +90,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
     return AppBar(elevation: 0.0, backgroundColor: Colors.white, actions: [
       Padding(
         padding: const EdgeInsets.only(right: 20, top: 20),
-        child: InkWell(
-          onTap: () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const LoginPage())),
-          child: secondaryBody('Skip'),
+        child: Semantics(
+          label: 'Skip to login',
+          child: InkWell(
+            onTap: () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const LoginPage())),
+            child: secondaryBody('Skip'),
+          ),
         ),
       )
     ]);
